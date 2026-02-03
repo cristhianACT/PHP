@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS ventas (
     usuario_id INT,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL DEFAULT 0,
+    metodo_pago VARCHAR(50) DEFAULT 'Efectivo', -- Nuevo campo
     estado VARCHAR(20) DEFAULT 'COMPLETADA',
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );

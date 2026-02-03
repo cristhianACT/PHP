@@ -58,8 +58,9 @@ $empresa = [
         
         <div class="divider"></div>
         
-        <p><strong>Ticket Nº:</strong> <?= str_pad($venta['id'], 6, "0", STR_PAD_LEFT) ?></p>
+        <p><strong>Nº Ticket:</strong> <?= str_pad($venta['id'], 6, "0", STR_PAD_LEFT) ?></p>
         <p><strong>Fecha:</strong> <?= date('d/m/Y H:i', strtotime($venta['fecha'])) ?></p>
+        <p><strong>Pago:</strong> <?= $venta['metodo_pago'] ?? 'Efectivo' ?></p>
         
         <div class="divider"></div>
         

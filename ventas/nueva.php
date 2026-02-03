@@ -38,6 +38,17 @@ while ($row = $result->fetch_assoc()) {
         </div>
 
         <div class="cart-summary">
+            <!-- Selección de Método de Pago -->
+            <div class="mb-4">
+                <label class="form-label" style="font-size: 0.9rem;">Método de Pago</label>
+                <select id="metodoPago" class="form-control">
+                    <option value="Efectivo">💵 Efectivo</option>
+                    <option value="Tarjeta">💳 Tarjeta Débito/Crédito</option>
+                    <option value="Transferencia">📲 Transferencia / QR</option>
+                    <option value="Otro">📝 Otro</option>
+                </select>
+            </div>
+
             <div class="flex justify-between mb-4">
                 <span style="font-size: 1.25rem; font-weight: 600;">Total</span>
                 <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary);" id="totalDisplay">$0.00</span>
@@ -155,10 +166,12 @@ while ($row = $result->fetch_assoc()) {
         if (!confirm('¿Procesar venta por ' + totalDisplay.innerText + '?')) return;
 
         // Enviar a PHP
+        const metodo = document.getElementById('metodoPago').value;
+
         fetch('procesar.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: cart })
+            body: JSON.stringify({ items: cart, metodo_pago: metodo })
         })
         .then(res => res.json())
         .then(data => {

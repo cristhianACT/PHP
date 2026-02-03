@@ -23,9 +23,11 @@ $conn->begin_transaction();
 
 try {
     // 1. Crear Venta
-    $sqlVenta = "INSERT INTO ventas (total, estado, fecha) VALUES (?, 'COMPLETADA', NOW())";
+    $metodo = isset($data['metodo_pago']) ? $conn->real_escape_string($data['metodo_pago']) : 'Efectivo';
+    
+    $sqlVenta = "INSERT INTO ventas (total, metodo_pago, estado, fecha) VALUES (?, ?, 'COMPLETADA', NOW())";
     $stmt = $conn->prepare($sqlVenta);
-    $stmt->bind_param("d", $totalVenta);
+    $stmt->bind_param("ds", $totalVenta, $metodo);
     $stmt->execute();
     $ventaId = $conn->insert_id;
 

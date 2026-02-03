@@ -7,14 +7,14 @@ $fecha_fin = isset($_GET['fin']) ? $_GET['fin'] : date('Y-m-t');
 
 $filename = "Reporte_Ventas_" . $fecha_inicio . "_al_" . $fecha_fin . ".xls";
 
-// Headers para engañar al navegador y que Excel lo abra
+// Headers para Excel
 header('Content-Type: application/vnd.ms-excel; charset=utf-8');
 header('Content-Disposition: attachment; filename=' . $filename);
 header("Pragma: no-cache"); 
 header("Expires: 0");
 
 // Consulta
-$sql = "SELECT v.id, v.fecha, v.total, v.estado, p.nombre as producto, d.cantidad, d.precio_unitario, d.subtotal 
+$sql = "SELECT v.id, v.fecha, v.total, v.metodo_pago, v.estado, p.nombre as producto, d.cantidad, d.precio_unitario, d.subtotal 
         FROM ventas v
         JOIN detalle_venta d ON v.id = d.venta_id
         JOIN productos p ON d.producto_id = p.id
@@ -26,14 +26,15 @@ $result = $conn->query($sql);
 <html xmlns:x="urn:schemas-microsoft-com:office:excel">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!-- Estilos básicos que Excel interpreta -->
     <style>
-        table { border-collapse: collapse; width: 100%; }
+        table { border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; }
         th { background-color: #4f46e5; color: white; border: 1px solid #000000; padding: 10px; text-align: center; }
         td { border: 1px solid #cccccc; padding: 8px; vertical-align: middle; }
         .num { text-align: right; }
         .center { text-align: center; }
-        .total-row { background-color: #f3f4f6; font-weight: bold; }
+        .total-row { background-color: #f3f4f6; font-weight: bold; font-size: 1.1em; }
+        .canceled { color: #991b1b; background-color: #fee2e2; text-decoration: line-through; }
+        .completed { color: #065f46; background-color: #d1fae5; }
     </style>
 </head>
 <body>
@@ -45,6 +46,8 @@ $result = $conn->query($sql);
             <tr>
                 <th style="background-color:#4338ca; color:#ffffff;">ID Venta</th>
                 <th style="background-color:#4338ca; color:#ffffff;">Fecha y Hora</th>
+                <th style="background-color:#4338ca; color:#ffffff;">Estado</th>
+                <th style="background-color:#4338ca; color:#ffffff;">Pago</th>
                 <th style="background-color:#4338ca; color:#ffffff;">Producto</th>
                 <th style="background-color:#4338ca; color:#ffffff;">Cantidad</th>
                 <th style="background-color:#4338ca; color:#ffffff;">Precio Unit.</th>
@@ -55,20 +58,32 @@ $result = $conn->query($sql);
             <?php 
             $gran_total = 0;
             while ($row = $result->fetch_assoc()): 
-                $gran_total += $row['subtotal'];
+                // Sumar solo si está completada
+                if($row['estado'] == 'COMPLETADA') {
+                    $gran_total += $row['subtotal'];
+                    $style_estado = "background-color:#d1fae5; color:#065f46;";
+                    $style_row = "";
+                } else {
+                    $style_estado = "background-color:#fee2e2; color:#991b1b; font-weight:bold;";
+                    $style_row = "color:#999999;"; // Texto gris para filas canceladas
+                }
             ?>
-            <tr>
+            <tr style="<?= $style_row ?>">
                 <td class="center"><?= $row['id'] ?></td>
                 <td class="center"><?= date('d/m/Y H:i', strtotime($row['fecha'])) ?></td>
+                <td class="center" style="<?= $style_estado ?>"><?= $row['estado'] ?></td>
+                <td class="center"><?= $row['metodo_pago'] ?? 'Efectivo' ?></td>
                 <td><?= mb_convert_encoding($row['producto'], 'HTML-ENTITIES', 'UTF-8') ?></td>
                 <td class="center"><?= $row['cantidad'] ?></td>
                 <td class="num">$<?= number_format($row['precio_unitario'], 2) ?></td>
-                <td class="num" style="background-color:#e0e7ff; color:#3730a3;">$<?= number_format($row['subtotal'], 2) ?></td>
+                <td class="num" style="<?= $row['estado'] == 'COMPLETADA' ? 'background-color:#e0e7ff; color:#3730a3;' : '' ?>">
+                    $<?= number_format($row['subtotal'], 2) ?>
+                </td>
             </tr>
             <?php endwhile; ?>
             
             <tr class="total-row">
-                <td colspan="5" style="text-align: right;">TOTAL GENERAL</td>
+                <td colspan="7" style="text-align: right;">TOTAL (Solo Ventas Completadas)</td>
                 <td class="num" style="background-color:#c7d2fe; color:#312e81; border: 2px solid #312e81;">
                     $<?= number_format($gran_total, 2) ?>
                 </td>
