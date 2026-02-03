@@ -49,6 +49,7 @@ try {
     }
 
     $conn->commit();
+    // Return ID para redireccionar
     echo json_encode(['success' => true, 'id' => $ventaId]);
 
 } catch (Exception $e) {

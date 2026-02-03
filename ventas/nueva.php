@@ -163,8 +163,8 @@ while ($row = $result->fetch_assoc()) {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                alert('Venta realizada con éxito!');
-                window.location.href = '/'; // Volver al inicio o ticket
+                // Redirigir al ticket
+                window.location.href = '/ventas/ticket.php?id=' + data.id;
             } else {
                 alert('Error: ' + data.message);
             }
