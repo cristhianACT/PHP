@@ -35,13 +35,18 @@ if (!isset($_SESSION['usuario_id']) && $current_page != 'login.php' && $current_
             <a href="/" class="brand">
                 <i class="fa-solid fa-layer-group"></i> TiendaPOS
             </a>
-            <ul class="nav-links">
+            
+            <button class="hamburger-btn" id="mobile-menu-btn" aria-label="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
                 <li><a href="/" class="nav-link <?= $_SERVER['REQUEST_URI'] == '/' ? 'active' : '' ?>"><i class="fa-solid fa-house"></i> Inicio</a></li>
                 <li><a href="/ventas/nueva.php" class="nav-link <?= strpos($_SERVER['REQUEST_URI'], 'ventas') !== false ? 'active' : '' ?>"><i class="fa-solid fa-cash-register"></i> Ventas</a></li>
                 <li><a href="/productos/listar.php" class="nav-link <?= strpos($_SERVER['REQUEST_URI'], 'productos') !== false ? 'active' : '' ?>"><i class="fa-solid fa-box-open"></i> Productos</a></li>
                 <li><a href="/reportes/index.php" class="nav-link <?= strpos($_SERVER['REQUEST_URI'], 'reportes') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
                 
-                <li style="margin-left: 1rem;">
+                <li style="margin-left: 1rem;" class="logout-item">
                     <a href="/auth/logout.php" class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 99px;">
                         <i class="fa-solid fa-power-off"></i>
                     </a>
@@ -49,6 +54,27 @@ if (!isset($_SESSION['usuario_id']) && $current_page != 'login.php' && $current_
             </ul>
         </div>
     </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.getElementById('nav-links');
+
+            if(mobileBtn) {
+                mobileBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('mobile-active');
+                    const icon = mobileBtn.querySelector('i');
+                    if (navLinks.classList.contains('mobile-active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    } else {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
+        });
+    </script>
     <?php endif; ?>
     
     <main class="container">

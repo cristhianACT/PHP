@@ -23,7 +23,7 @@ $sql = "SELECT * FROM productos WHERE activo = 1 ORDER BY nombre";
 $result = $conn->query($sql);
 ?>
 
-<div class="flex justify-between items-center mb-4">
+<div class="flex justify-between items-center mb-4 flex-wrap gap-2">
     <h1>Inventario de Productos</h1>
     <a href="/productos/crear.php" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Producto</a>
 </div>

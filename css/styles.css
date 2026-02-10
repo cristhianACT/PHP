@@ -90,6 +90,7 @@ header {
     font-size: 1.5rem;
     font-weight: 800;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-decoration: none;
@@ -260,6 +261,7 @@ header {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     overflow: hidden;
+    overflow-x: auto;
     margin-top: 1rem;
     border: 1px solid var(--border);
 }
@@ -413,6 +415,10 @@ tr:hover td {
     flex-direction: column;
 }
 
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
 .items-center {
     align-items: center;
 }
@@ -467,4 +473,186 @@ tr:hover td {
 
 .text-light {
     color: var(--text-light);
+}
+
+/* Reports Header Visibility */
+.reports-header-mobile {
+    display: none;
+}
+
+.reports-header-desktop {
+    display: flex;
+}
+
+/* Hamburger Button */
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    transition: background 0.2s;
+}
+
+.hamburger-btn:hover {
+    background: #f1f5f9;
+}
+
+/* --- MOBILE RESPONSIVE TWEAKS --- */
+@media (max-width: 768px) {
+
+    /* Reports Header Mobile */
+    .reports-header-mobile {
+        display: block;
+    }
+
+    .reports-header-desktop {
+        display: none;
+    }
+
+    /* Global Container */
+    .container {
+        padding: 1rem;
+        width: 100%;
+        padding-top: 1.5rem;
+    }
+
+    /* Navbar Mobile */
+    .navbar {
+        flex-direction: row;
+        /* Keep row for brand and hamburger */
+        flex-wrap: wrap;
+        /* Allow wrapping */
+        justify-content: space-between;
+        align-items: center;
+        height: auto;
+        padding: 0.75rem 0;
+        position: relative;
+    }
+
+    .hamburger-btn {
+        display: block;
+    }
+
+    /* Hidden Menu State */
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        background: white;
+        padding: 1rem;
+        border-radius: var(--radius-lg);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+        border: 1px solid var(--border);
+        gap: 0.5rem;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    /* Visible Menu State */
+    .nav-links.mobile-active {
+        display: flex;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0px;
+        border-radius: var(--radius-md);
+        padding: 0.75rem;
+        transition: background 0.2s;
+    }
+
+    .nav-link.active {
+        box-shadow: none;
+        /* remove desktop shadow */
+        background: var(--primary);
+        color: white;
+    }
+
+    /* POS Mobile Layout */
+    .pos-layout {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 1rem;
+        padding-bottom: 80px;
+    }
+
+    .product-grid {
+        max-height: 40vh;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 0.5rem;
+        padding: 0;
+    }
+
+    .pos-product-card {
+        padding: 0.75rem;
+    }
+
+    .cart-panel {
+        height: auto;
+        max-height: none;
+        border-radius: var(--radius-lg);
+        overflow: visible;
+    }
+
+    .cart-items {
+        max-height: 300px;
+    }
+
+    /* Dashboard Mobile */
+    .grid-dashboard {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Typography & Spacing */
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.8rem;
+    }
+
+    .login-box {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
 }

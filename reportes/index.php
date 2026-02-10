@@ -31,12 +31,13 @@ $sqlDiario = "SELECT DATE(fecha) as dia, SUM(total) as venta_dia
 $resDiario = $conn->query($sqlDiario);
 ?>
 
-<div class="flex justify-between items-center mb-4 fade-in">
+<!-- Desktop Layout -->
+<div class="flex justify-between items-center mb-4 fade-in reports-header-desktop">
     <div>
         <h1 style="font-size: 2rem; font-weight: 800;">Reportes y Estadísticas</h1>
         <p class="text-light">Analiza el rendimiento de tu negocio</p>
     </div>
-    <div class="flex gap-2">
+    <div class="flex gap-2 flex-wrap">
         <form class="flex items-center" style="background: white; padding: 0.5rem 1rem; border-radius: 99px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); gap: 1rem;">
             <div class="flex items-center gap-2">
                 <i class="fa-regular fa-calendar" style="color: var(--primary);"></i>
@@ -61,6 +62,35 @@ $resDiario = $conn->query($sqlDiario);
             <i class="fa-solid fa-file-excel"></i> Exportar
         </a>
     </div>
+</div>
+
+<!-- Mobile Layout -->
+<div class="reports-header-mobile mb-4 fade-in">
+    <div class="mb-4">
+        <h1 style="font-size: 1.5rem; font-weight: 800;">Reportes y Estadísticas</h1>
+        <p class="text-light" style="font-size: 0.9rem;">Analiza el rendimiento de tu negocio</p>
+    </div>
+    
+    <!-- Filters below heading on mobile -->
+    <form class="flex-col gap-2 mb-2" style="background: white; padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+        <div class="flex items-center gap-2">
+            <i class="fa-regular fa-calendar" style="color: var(--primary);"></i>
+            <input type="date" name="inicio" value="<?= $fecha_inicio ?>" class="form-control" style="flex: 1; font-family: var(--font-main);">
+        </div>
+        
+        <div class="flex items-center gap-2">
+            <i class="fa-regular fa-calendar" style="color: var(--primary);"></i>
+            <input type="date" name="fin" value="<?= $fecha_fin ?>" class="form-control" style="flex: 1; font-family: var(--font-main);">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full">
+            <i class="fa-solid fa-filter"></i> Filtrar
+        </button>
+    </form>
+    
+    <a href="exportar_excel.php?inicio=<?= $fecha_inicio ?>&fin=<?= $fecha_fin ?>" target="_blank" class="btn btn-success w-full">
+        <i class="fa-solid fa-file-excel"></i> Exportar a Excel
+    </a>
 </div>
 
 <div class="grid-dashboard fade-in">
