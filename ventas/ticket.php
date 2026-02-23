@@ -164,7 +164,7 @@ $empresa = [
                 <tr>
                     <td><?= substr($item['nombre'], 0, 15) ?></td>
                     <td><?= $item['cantidad'] ?></td>
-                    <td>$<?= number_format($item['subtotal'], 2) ?></td>
+                    <td>S/ <?= number_format($item['subtotal'], 2) ?></td>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -173,7 +173,7 @@ $empresa = [
         <div class="divider"></div>
         
         <div style="text-align: right;">
-            <h3>TOTAL: $<?= number_format($venta['total'], 2) ?></h3>
+            <h3>TOTAL: S/ <?= number_format($venta['total'], 2) ?></h3>
         </div>
         
         <div class="center" style="margin-top: 20px;">

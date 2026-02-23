@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="form-group">
-            <label class="form-label">Precio de Venta ($) *</label>
+            <label class="form-label">Precio de Venta (S/) *</label>
             <input type="number" step="0.01" name="precio" class="form-control" value="<?= $precio ?>" required>
         </div>
 

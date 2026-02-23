@@ -21,6 +21,6 @@ function cleanInput($data) {
 }
 
 function formatMoney($amount) {
-    return "$" . number_format($amount, 2);
+    return "S/ " . number_format($amount, 2);
 }
 ?>

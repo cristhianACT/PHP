@@ -98,7 +98,7 @@ $resDiario = $conn->query($sqlDiario);
     <div class="card">
         <h3>Ticket Promedio</h3>
         <div class="value" style="color: var(--secondary);">
-            <?= $totalTransacciones > 0 ? formatMoney($totalVendido / $totalTransacciones) : '$0.00' ?>
+            <?= $totalTransacciones > 0 ? formatMoney($totalVendido / $totalTransacciones) : 'S/ 0.00' ?>
         </div>
         <p class="text-light" style="margin-top: 0.5rem; font-size: 0.8rem;">Promedio de compra por cliente</p>
     </div>

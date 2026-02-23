@@ -45,7 +45,7 @@ while ($row = $result->fetch_assoc()) {
 
             <div class="flex justify-between mb-4">
                 <span style="font-size: 1.25rem; font-weight: 600;">Total</span>
-                <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary);" id="totalDisplay">$0.00</span>
+                <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary);" id="totalDisplay">S/ 0.00</span>
             </div>
             
             <button onclick="procesarVenta()" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
@@ -82,7 +82,7 @@ while ($row = $result->fetch_assoc()) {
         productGrid.innerHTML = list.map(p => `
             <div class="pos-product-card" onclick="addToCart(${p.id})">
                 <div style="font-weight: 600; margin-bottom: 0.5rem;">${p.nombre}</div>
-                <div style="color: var(--primary); font-weight: 700;">$${parseFloat(p.precio).toFixed(2)}</div>
+                <div style="color: var(--primary); font-weight: 700;">S/ ${parseFloat(p.precio).toFixed(2)}</div>
                 <small style="color: var(--text-light);">Stock: ${p.stock}</small>
             </div>
         `).join('');
@@ -113,7 +113,7 @@ while ($row = $result->fetch_assoc()) {
     function updateCart() {
         if (cart.length === 0) {
             cartItems.innerHTML = '<div class="text-center" style="margin-top: 2rem; color: var(--text-light);">El carrito está vacío</div>';
-            totalDisplay.innerText = "$0.00";
+            totalDisplay.innerText = "S/ 0.00";
             return;
         }
 
@@ -126,18 +126,18 @@ while ($row = $result->fetch_assoc()) {
                     <div>
                         <div style="font-weight: 600;">${item.nombre}</div>
                         <div style="font-size: 0.85rem; color: var(--text-light);">
-                            ${item.cantidad} x $${parseFloat(item.precio).toFixed(2)}
+                            ${item.cantidad} x S/ ${parseFloat(item.precio).toFixed(2)}
                         </div>
                     </div>
                     <div style="text-align: right;">
-                        <div style="font-weight: 600;">$${subtotal.toFixed(2)}</div>
+                        <div style="font-weight: 600;">S/ ${subtotal.toFixed(2)}</div>
                         <button onclick="removeFromCart(${item.id})" style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.8rem;">Eliminar</button>
                     </div>
                 </div>
             `;
         }).join('');
 
-        totalDisplay.innerText = "$" + total.toFixed(2);
+        totalDisplay.innerText = "S/ " + total.toFixed(2);
     }
 
     function limpiarCarrito() {

@@ -71,9 +71,9 @@ $result = $conn->query($sql);
                 <td class="center"><?= $row['metodo_pago'] ?? 'Efectivo' ?></td>
                 <td><?= mb_convert_encoding($row['producto'], 'HTML-ENTITIES', 'UTF-8') ?></td>
                 <td class="center"><?= $row['cantidad'] ?></td>
-                <td class="num">$<?= number_format($row['precio_unitario'], 2) ?></td>
+                <td class="num">S/ <?= number_format($row['precio_unitario'], 2) ?></td>
                 <td class="num" style="<?= $row['estado'] == 'COMPLETADA' ? 'background-color:#e0e7ff; color:#3730a3;' : '' ?>">
-                    $<?= number_format($row['subtotal'], 2) ?>
+                    S/ <?= number_format($row['subtotal'], 2) ?>
                 </td>
             </tr>
             <?php endwhile; ?>
@@ -81,7 +81,7 @@ $result = $conn->query($sql);
             <tr class="total-row">
                 <td colspan="7" style="text-align: right;">TOTAL (Solo Ventas Completadas)</td>
                 <td class="num" style="background-color:#c7d2fe; color:#312e81; border: 2px solid #312e81;">
-                    $<?= number_format($gran_total, 2) ?>
+                    S/ <?= number_format($gran_total, 2) ?>
                 </td>
             </tr>
         </tbody>
