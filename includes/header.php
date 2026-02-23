@@ -1,8 +1,6 @@
 <?php
-// Recalculamos el header para incluir autenticación
 session_start();
 
-// Si no hay sesión y no estamos en login, redirigir
 $current_page = basename($_SERVER['PHP_SELF']);
 if (!isset($_SESSION['usuario_id']) && $current_page != 'login.php' && $current_page != 'crear_admin.php') {
     header("Location: /login.php");
@@ -14,18 +12,15 @@ if (!isset($_SESSION['usuario_id']) && $current_page != 'login.php' && $current_
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema POS Premium</title>
+    <title>Sistema POS</title>
     
-    <!-- Google Fonts: Outfit para un look moderno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- CSS -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Librería para PDF (html2pdf) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body class="fade-in">

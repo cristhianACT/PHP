@@ -1,19 +1,12 @@
-/* Premium Modern Palette & Variables */
 :root {
     --primary: #6366f1;
-    /* Indigo 500 */
     --primary-dark: #4f46e5;
     --secondary: #ec4899;
-    /* Pink 500 */
     --accent: #8b5cf6;
-    /* Violet 500 */
     --background: #f8fafc;
-    /* Slate 50 */
     --surface: #ffffff;
     --text: #1e293b;
-    /* Slate 800 */
     --text-light: #64748b;
-    /* Slate 500 */
     --danger: #ef4444;
     --success: #10b981;
     --warning: #f59e0b;
@@ -44,7 +37,6 @@ body {
     flex-direction: column;
 }
 
-/* Layout & Animations */
 .container {
     width: 95%;
     max-width: 1300px;
@@ -69,7 +61,6 @@ body {
     }
 }
 
-/* Header Premium */
 header {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(12px);
@@ -129,7 +120,6 @@ header {
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
-/* Dashboard Grid */
 .grid-dashboard {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -186,7 +176,6 @@ header {
     letter-spacing: -0.03em;
 }
 
-/* Buttons & Inputs */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -255,7 +244,6 @@ header {
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-/* Tables */
 .table-container {
     background: var(--surface);
     border-radius: var(--radius-lg);
@@ -298,7 +286,6 @@ tr:hover td {
     background-color: #f1f5f9;
 }
 
-/* Badges */
 .badge {
     padding: 0.35rem 0.85rem;
     border-radius: 99px;
@@ -322,7 +309,6 @@ tr:hover td {
     color: #5b21b6;
 }
 
-/* POS Specific */
 .pos-layout {
     display: grid;
     grid-template-columns: 2fr 1.1fr;
@@ -387,7 +373,6 @@ tr:hover td {
     box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.05);
 }
 
-/* Login */
 .login-container {
     display: flex;
     justify-content: center;
@@ -405,7 +390,6 @@ tr:hover td {
     max-width: 420px;
 }
 
-/* Utilities */
 .flex {
     display: flex;
 }
@@ -475,7 +459,6 @@ tr:hover td {
     color: var(--text-light);
 }
 
-/* Reports Header Visibility */
 .reports-header-mobile {
     display: none;
 }
@@ -484,7 +467,6 @@ tr:hover td {
     display: flex;
 }
 
-/* Hamburger Button */
 .hamburger-btn {
     display: none;
     background: none;
@@ -501,10 +483,8 @@ tr:hover td {
     background: #f1f5f9;
 }
 
-/* --- MOBILE RESPONSIVE TWEAKS --- */
 @media (max-width: 768px) {
 
-    /* Reports Header Mobile */
     .reports-header-mobile {
         display: block;
     }
@@ -513,19 +493,15 @@ tr:hover td {
         display: none;
     }
 
-    /* Global Container */
     .container {
         padding: 1rem;
         width: 100%;
         padding-top: 1.5rem;
     }
 
-    /* Navbar Mobile */
     .navbar {
         flex-direction: row;
-        /* Keep row for brand and hamburger */
         flex-wrap: wrap;
-        /* Allow wrapping */
         justify-content: space-between;
         align-items: center;
         height: auto;
@@ -537,7 +513,6 @@ tr:hover td {
         display: block;
     }
 
-    /* Hidden Menu State */
     .nav-links {
         display: none;
         width: 100%;
@@ -552,7 +527,6 @@ tr:hover td {
         animation: slideDown 0.3s ease-out;
     }
 
-    /* Visible Menu State */
     .nav-links.mobile-active {
         display: flex;
     }
@@ -585,12 +559,10 @@ tr:hover td {
 
     .nav-link.active {
         box-shadow: none;
-        /* remove desktop shadow */
         background: var(--primary);
         color: white;
     }
 
-    /* POS Mobile Layout */
     .pos-layout {
         display: flex;
         flex-direction: column;
@@ -622,13 +594,11 @@ tr:hover td {
         max-height: 300px;
     }
 
-    /* Dashboard Mobile */
     .grid-dashboard {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    /* Typography & Spacing */
     h1 {
         font-size: 1.5rem;
     }

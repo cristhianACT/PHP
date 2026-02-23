@@ -1,7 +1,6 @@
 <?php
 include("../config/conexion.php");
 
-// Intentar agregar la columna metodo_pago
 $sql = "ALTER TABLE ventas ADD COLUMN metodo_pago VARCHAR(50) DEFAULT 'Efectivo' AFTER total";
 
 if ($conn->query($sql) === TRUE) {

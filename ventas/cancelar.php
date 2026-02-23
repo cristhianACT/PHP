@@ -9,7 +9,6 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-// 1. Obtener detalles
 $sqlDetalles = "SELECT * FROM detalle_venta WHERE venta_id = $id";
 $result = $conn->query($sqlDetalles);
 
@@ -18,11 +17,9 @@ if ($result) {
         $prodId = $row['producto_id'];
         $cant = $row['cantidad'];
 
-        // Devolver stock
         $conn->query("UPDATE productos SET stock = stock + $cant WHERE id = $prodId");
     }
 
-    // 2. Marcar como cancelada
     $conn->query("UPDATE ventas SET estado = 'CANCELADA' WHERE id = $id");
 
     $_SESSION['msg'] = "Venta #$id cancelada y stock restaurado.";

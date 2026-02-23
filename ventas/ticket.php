@@ -8,12 +8,9 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-// Datos Venta
 $venta = $conn->query("SELECT * FROM ventas WHERE id = $id")->fetch_assoc();
-// Datos Detalle
 $detalles = $conn->query("SELECT d.*, p.nombre FROM detalle_venta d JOIN productos p ON d.producto_id = p.id WHERE d.venta_id = $id");
 
-// Empresa info (Hardcoded por ahora)
 $empresa = [
     "nombre" => "LUIS DC STORE",
     "direccion" => "Av. Principal 123, Centro",
@@ -42,7 +39,7 @@ $empresa = [
             display: flex; 
             justify-content: center; 
             padding: 20px;
-            padding-bottom: 100px; /* Space for mobile nav */
+            padding-bottom: 100px;
             margin: 0;
             min-height: 100vh;
         }
@@ -64,7 +61,6 @@ $empresa = [
         td { text-align: right; padding: 5px 0; }
         td:first-child { text-align: left; }
         
-        /* Action Buttons */
         .action-buttons {
             position: fixed;
             top: 20px;
@@ -107,7 +103,6 @@ $empresa = [
             @page { margin: 0; }
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             body { padding: 10px; padding-bottom: 90px; align-items: flex-start; }
             
@@ -137,7 +132,6 @@ $empresa = [
             }
         }
     </style>
-    <!-- html2pdf si se requiere guardar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
@@ -217,7 +211,7 @@ $empresa = [
                 filename:     'Ticket_<?= $id ?>.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'mm', format: [80, 200], orientation: 'portrait' } // Formato ticket 80mm
+                jsPDF:        { unit: 'mm', format: [80, 200], orientation: 'portrait' }
             };
             html2pdf().set(opt).from(element).save();
         }

@@ -2,18 +2,15 @@
 include("../config/conexion.php");
 include("../includes/header.php");
 
-// Filtros de fecha (Por defecto mes actual)
 $fecha_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-01');
 $fecha_fin = isset($_GET['fin']) ? $_GET['fin'] : date('Y-m-t');
 
-// 1. Total Vendido en Rango
 $sqlTotal = "SELECT SUM(total) as gran_total, COUNT(*) as cant_ventas FROM ventas 
              WHERE DATE(fecha) BETWEEN '$fecha_inicio' AND '$fecha_fin' AND estado='COMPLETADA'";
 $resTotal = $conn->query($sqlTotal)->fetch_assoc();
 $totalVendido = $resTotal['gran_total'] ?: 0;
 $totalTransacciones = $resTotal['cant_ventas'] ?: 0;
 
-// 2. Productos más vendidos
 $sqlTop = "SELECT p.nombre, SUM(d.cantidad) as total_vendidos 
            FROM detalle_venta d 
            JOIN productos p ON d.producto_id = p.id 
@@ -23,7 +20,6 @@ $sqlTop = "SELECT p.nombre, SUM(d.cantidad) as total_vendidos
            ORDER BY total_vendidos DESC LIMIT 5";
 $resTop = $conn->query($sqlTop);
 
-// 3. Ventas Diarias (para gráfico simple o tabla)
 $sqlDiario = "SELECT DATE(fecha) as dia, SUM(total) as venta_dia 
               FROM ventas 
               WHERE DATE(fecha) BETWEEN '$fecha_inicio' AND '$fecha_fin' AND estado='COMPLETADA'
@@ -31,7 +27,6 @@ $sqlDiario = "SELECT DATE(fecha) as dia, SUM(total) as venta_dia
 $resDiario = $conn->query($sqlDiario);
 ?>
 
-<!-- Desktop Layout -->
 <div class="flex justify-between items-center mb-4 fade-in reports-header-desktop">
     <div>
         <h1 style="font-size: 2rem; font-weight: 800;">Reportes y Estadísticas</h1>
@@ -64,14 +59,12 @@ $resDiario = $conn->query($sqlDiario);
     </div>
 </div>
 
-<!-- Mobile Layout -->
 <div class="reports-header-mobile mb-4 fade-in">
     <div class="mb-4">
         <h1 style="font-size: 1.5rem; font-weight: 800;">Reportes y Estadísticas</h1>
         <p class="text-light" style="font-size: 0.9rem;">Analiza el rendimiento de tu negocio</p>
     </div>
     
-    <!-- Filters below heading on mobile -->
     <form class="flex-col gap-2 mb-2" style="background: white; padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
         <div class="flex items-center gap-2">
             <i class="fa-regular fa-calendar" style="color: var(--primary);"></i>
@@ -112,7 +105,6 @@ $resDiario = $conn->query($sqlDiario);
 </div>
 
 <div class="pos-layout" style="height: auto; grid-template-columns: 1fr 1fr; margin-bottom: 3rem;">
-    <!-- Tabla Ventas Diarias -->
     <div class="card">
         <h3><i class="fa-solid fa-calendar-day"></i> Venta Diaria</h3>
         <div class="table-container" style="box-shadow: none; border: none; max-height: 300px; overflow-y: auto;">
@@ -132,7 +124,6 @@ $resDiario = $conn->query($sqlDiario);
         </div>
     </div>
 
-    <!-- Top Productos -->
     <div class="card">
         <h3><i class="fa-solid fa-crown"></i> Productos Más Vendidos</h3>
         <div class="table-container" style="box-shadow: none; border: none;">

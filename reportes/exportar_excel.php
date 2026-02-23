@@ -1,19 +1,16 @@
 <?php
 include("../config/conexion.php");
 
-// Filtros
 $fecha_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-01');
 $fecha_fin = isset($_GET['fin']) ? $_GET['fin'] : date('Y-m-t');
 
 $filename = "Reporte_Ventas_" . $fecha_inicio . "_al_" . $fecha_fin . ".xls";
 
-// Headers para Excel
 header('Content-Type: application/vnd.ms-excel; charset=utf-8');
 header('Content-Disposition: attachment; filename=' . $filename);
 header("Pragma: no-cache"); 
 header("Expires: 0");
 
-// Consulta
 $sql = "SELECT v.id, v.fecha, v.total, v.metodo_pago, v.estado, p.nombre as producto, d.cantidad, d.precio_unitario, d.subtotal 
         FROM ventas v
         JOIN detalle_venta d ON v.id = d.venta_id
@@ -58,14 +55,13 @@ $result = $conn->query($sql);
             <?php 
             $gran_total = 0;
             while ($row = $result->fetch_assoc()): 
-                // Sumar solo si está completada
                 if($row['estado'] == 'COMPLETADA') {
                     $gran_total += $row['subtotal'];
                     $style_estado = "background-color:#d1fae5; color:#065f46;";
                     $style_row = "";
                 } else {
                     $style_estado = "background-color:#fee2e2; color:#991b1b; font-weight:bold;";
-                    $style_row = "color:#999999;"; // Texto gris para filas canceladas
+                    $style_row = "color:#999999;";
                 }
             ?>
             <tr style="<?= $style_row ?>">

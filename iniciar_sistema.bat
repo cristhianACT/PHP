@@ -1,7 +1,6 @@
 @echo off
 set PHP_BIN=php
 
-:: Intentar encontrar PHP en XAMPP si no esta en el PATH global
 if exist "C:\xampp\php\php.exe" set PHP_BIN="C:\xampp\php\php.exe"
 
 echo Iniciando servidor POS usando: %PHP_BIN%

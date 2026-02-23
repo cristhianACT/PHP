@@ -2,10 +2,8 @@
 include("../config/conexion.php");
 include("../includes/header.php");
 
-// Lógica para Eliminar
 if (isset($_GET['eliminar'])) {
     $id = intval($_GET['eliminar']);
-    // Soft delete (desactivar)
     $sql = "UPDATE productos SET activo = 0 WHERE id = $id";
     if ($conn->query($sql) === TRUE) {
         $_SESSION['msg'] = "Producto eliminado correctamente.";
@@ -14,7 +12,6 @@ if (isset($_GET['eliminar'])) {
         $_SESSION['msg'] = "Error al eliminar: " . $conn->error;
         $_SESSION['msg_type'] = "danger";
     }
-    // Redireccion js para limpiar url
     echo "<script>window.location.href='/productos/listar.php';</script>";
     exit;
 }

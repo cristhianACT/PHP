@@ -1,8 +1,6 @@
--- Crear Base de Datos
 CREATE DATABASE IF NOT EXISTS tienda;
 USE tienda;
 
--- Tabla: Usuarios (Para login)
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(50) UNIQUE NOT NULL,
@@ -12,7 +10,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabla: Productos
 CREATE TABLE IF NOT EXISTS productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo_barras VARCHAR(50) UNIQUE NULL,
@@ -25,18 +22,16 @@ CREATE TABLE IF NOT EXISTS productos (
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabla: Ventas
 CREATE TABLE IF NOT EXISTS ventas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL DEFAULT 0,
-    metodo_pago VARCHAR(50) DEFAULT 'Efectivo', -- Nuevo campo
+    metodo_pago VARCHAR(50) DEFAULT 'Efectivo',
     estado VARCHAR(20) DEFAULT 'COMPLETADA',
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
--- Tabla: Detalle Venta
 CREATE TABLE IF NOT EXISTS detalle_venta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     venta_id INT NOT NULL,
@@ -48,7 +43,6 @@ CREATE TABLE IF NOT EXISTS detalle_venta (
     FOREIGN KEY (producto_id) REFERENCES productos(id)
 );
 
--- Datos de prueba
 INSERT INTO productos (nombre, precio, stock, codigo_barras) VALUES 
 ('Coca Cola 600ml', 1.50, 100, '5449000000996'),
 ('Papas Lays Clásicas', 2.00, 50, '7791234567890'),

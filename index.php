@@ -2,8 +2,6 @@
 include("config/conexion.php");
 include("includes/header.php");
 
-// Consultas para el dashboard
-// 1. Total ventas hoy
 $sqlVentas = "SELECT SUM(total) as total_hoy FROM ventas WHERE DATE(fecha) = CURDATE() AND estado = 'COMPLETADA'";
 $resultVentas = $conn->query($sqlVentas);
 $totalHoy = 0;
@@ -11,7 +9,6 @@ if ($resultVentas && $row = $resultVentas->fetch_assoc()) {
     $totalHoy = $row['total_hoy'] ?: 0;
 }
 
-// 2. Productos totales
 $sqlProd = "SELECT COUNT(*) as total FROM productos WHERE activo = 1";
 $resultProd = $conn->query($sqlProd);
 $totalProd = 0;
@@ -19,7 +16,6 @@ if ($resultProd && $row = $resultProd->fetch_assoc()) {
     $totalProd = $row['total'];
 }
 
-// 3. Ventas totales (cantidad)
 $sqlCountVentas = "SELECT COUNT(*) as total FROM ventas WHERE DATE(fecha) = CURDATE()";
 $resultCount = $conn->query($sqlCountVentas);
 $countVentas = 0;
@@ -34,7 +30,6 @@ if ($resultCount && $row = $resultCount->fetch_assoc()) {
 </div>
 
 <div class="grid-dashboard">
-    <!-- Card 1 -->
     <div class="card">
         <h3>Ventas de Hoy</h3>
         <div class="value" style="color: var(--success);"><?= formatMoney($totalHoy) ?></div>
@@ -43,7 +38,6 @@ if ($resultCount && $row = $resultCount->fetch_assoc()) {
         </p>
     </div>
 
-    <!-- Card 2 -->
     <div class="card">
         <h3>Productos Activos</h3>
         <div class="value" style="color: var(--primary);"><?= $totalProd ?></div>
@@ -52,7 +46,6 @@ if ($resultCount && $row = $resultCount->fetch_assoc()) {
         </p>
     </div>
 
-    <!-- Card 3 -->
     <div class="card">
         <h3>Accesos Rápidos</h3>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
@@ -93,7 +86,6 @@ if ($resultCount && $row = $resultCount->fetch_assoc()) {
                         </span>
                     </td>
                     <td>
-                        <!-- Botón para ver detalle o cancelar -->
                         <?php if($venta['estado'] == 'COMPLETADA'): ?>
                             <a href="/ventas/cancelar.php?id=<?= $venta['id'] ?>" class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="return confirm('¿Seguro que desea cancelar esta venta? Esto devolverá el stock.')">Cancelar</a>
                         <?php endif; ?>

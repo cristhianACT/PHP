@@ -10,7 +10,6 @@ $stock = "";
 $descripcion = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // cleanInput usa real_escape_string internamente ahora
     $nombre = cleanInput($_POST['nombre']);
     $codigo = cleanInput($_POST['codigo']);
     $precio = floatval($_POST['precio']);
@@ -22,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Prepare statement para MySQL
         $stmt = $conn->prepare("INSERT INTO productos (nombre, codigo_barras, precio, stock, descripcion) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("ssdis", $nombre, $codigo, $precio, $stock, $descripcion);
         

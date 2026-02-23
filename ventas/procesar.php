@@ -2,7 +2,6 @@
 include("../config/conexion.php");
 session_start();
 
-// Recibir JSON
 $input = file_get_contents("php://input");
 $data = json_decode($input, true);
 
@@ -18,11 +17,9 @@ foreach ($items as $item) {
     $totalVenta += ($item['precio'] * $item['cantidad']);
 }
 
-// Iniciar transacción
 $conn->begin_transaction();
 
 try {
-    // 1. Crear Venta
     $metodo = isset($data['metodo_pago']) ? $conn->real_escape_string($data['metodo_pago']) : 'Efectivo';
     
     $sqlVenta = "INSERT INTO ventas (total, metodo_pago, estado, fecha) VALUES (?, ?, 'COMPLETADA', NOW())";
@@ -31,7 +28,6 @@ try {
     $stmt->execute();
     $ventaId = $conn->insert_id;
 
-    // 2. Insertar Detalles y Actualizar Stock
     $sqlDetalle = "INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio_unitario, subtotal) VALUES (?, ?, ?, ?, ?)";
     $stmtDetalle = $conn->prepare($sqlDetalle);
 
@@ -41,17 +37,14 @@ try {
     foreach ($items as $item) {
         $subtotal = $item['precio'] * $item['cantidad'];
         
-        // Insertar detalle
         $stmtDetalle->bind_param("iiidd", $ventaId, $item['id'], $item['cantidad'], $item['precio'], $subtotal);
         $stmtDetalle->execute();
 
-        // Actualizar Stock
         $stmtStock->bind_param("ii", $item['cantidad'], $item['id']);
         $stmtStock->execute();
     }
 
     $conn->commit();
-    // Return ID para redireccionar
     echo json_encode(['success' => true, 'id' => $ventaId]);
 
 } catch (Exception $e) {
