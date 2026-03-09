@@ -1,6 +1,11 @@
     <?php
     session_start();
 
+    // Evitar que el navegador guarde la página en caché (soluciona el problema de retroceder al desloguear)
+    header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    header("Pragma: no-cache"); // HTTP 1.0.
+    header("Expires: 0"); // Proxies.
+
     $current_page = basename($_SERVER['PHP_SELF']);
     if (!isset($_SESSION['usuario_id']) && $current_page != 'login.php' && $current_page != 'crear_admin.php') {
         header("Location: /login.php");

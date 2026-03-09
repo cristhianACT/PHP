@@ -2,6 +2,17 @@
 include("config/conexion.php");
 session_start();
 
+// Evitar almacenamiento en caché
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Si ya hay sesión activa, redirigir al inicio
+if (isset($_SESSION['usuario_id'])) {
+    header("Location: /");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = cleanInput($_POST['usuario']);
     $password = $_POST['password'];

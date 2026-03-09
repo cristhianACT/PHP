@@ -1,0 +1,13 @@
+# Desactivar el listado de directorios
+Options -Indexes
+
+# Bloquear acceso a archivos sensibles
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<Files config/conexion.php>
+    Order allow,deny
+    Deny from all
+</Files>

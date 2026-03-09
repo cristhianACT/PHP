@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['usuario_rol']) || $_SESSION['usuario_rol'] !== 'admin') {
+    die("Acceso denegado.");
+}
 include("../config/conexion.php");
 
 $sql = "ALTER TABLE ventas ADD COLUMN metodo_pago VARCHAR(50) DEFAULT 'Efectivo' AFTER total";
