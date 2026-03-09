@@ -2,6 +2,13 @@
 include("../config/conexion.php");
 include("../includes/header.php");
 
+if (!isset($_SESSION['usuario_rol']) || ($_SESSION['usuario_rol'] !== 'admin' && $_SESSION['usuario_rol'] !=='cajero')) {
+    $_SESSION['msg'] = "Acceso denegado. No tienes permisos para ver reportes.";
+    $_SESSION['msg_type'] = "danger";
+    echo "<script>window.location.href='/';</script>";
+    exit;
+}
+
 $fecha_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-01');
 $fecha_fin = isset($_GET['fin']) ? $_GET['fin'] : date('Y-m-t');
 

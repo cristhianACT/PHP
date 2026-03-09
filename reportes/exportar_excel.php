@@ -1,8 +1,23 @@
 <?php
 include("../config/conexion.php");
+session_start();
 
-$fecha_inicio = isset($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-01');
-$fecha_fin = isset($_GET['fin']) ? $_GET['fin'] : date('Y-m-t');
+if (!isset($_SESSION['usuario_rol']) || ($_SESSION['usuario_rol'] !== 'admin' && $_SESSION['usuario_rol'] !== 'cajero')) {
+    die("Acceso denegado.");
+}
+$fecha_inicio = !empty($_GET['desde']) ? $_GET['desde'] : (!empty($_GET['inicio']) ? $_GET['inicio'] : date('Y-m-01'));
+$fecha_fin = !empty($_GET['hasta']) ? $_GET['hasta'] : (!empty($_GET['fin']) ? $_GET['fin'] : date('Y-m-t'));
+
+$where = "WHERE DATE(v.fecha) BETWEEN '$fecha_inicio' AND '$fecha_fin'";
+
+if (!empty($_GET['metodo'])) {
+    $metodo = $conn->real_escape_string($_GET['metodo']);
+    $where .= " AND v.metodo_pago = '$metodo'";
+}
+if (!empty($_GET['estado'])) {
+    $estado = $conn->real_escape_string($_GET['estado']);
+    $where .= " AND v.estado = '$estado'";
+}
 
 $filename = "Reporte_Ventas_" . $fecha_inicio . "_al_" . $fecha_fin . ".xls";
 
@@ -15,7 +30,7 @@ $sql = "SELECT v.id, v.fecha, v.total, v.metodo_pago, v.estado, p.nombre as prod
         FROM ventas v
         JOIN detalle_venta d ON v.id = d.venta_id
         JOIN productos p ON d.producto_id = p.id
-        WHERE DATE(v.fecha) BETWEEN '$fecha_inicio' AND '$fecha_fin'
+        $where
         ORDER BY v.fecha DESC";
 
 $result = $conn->query($sql);

@@ -60,12 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="form-label">Contraseña</label>
                     <input type="password" name="password" class="form-control" placeholder="••••••" required>
                 </div>
+                <br>
                 <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.875rem;">Ingresar</button>
             </form>
-
-            <div class="text-center mt-4" style="font-size: 0.85rem;">
-                <p>¿Primera vez? <a href="/crear_admin.php" style="color: var(--primary);">Crear usuario admin</a></p>
-            </div>
         </div>
     </div>
 

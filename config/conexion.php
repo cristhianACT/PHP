@@ -1,30 +1,19 @@
 <?php
 
-if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
-
-    define('DB_SERVER', 'localhost');
-    define('DB_USER', 'root');
-    define('DB_PASS', '');
-    define('DB_NAME', 'tienda');
-}
-else {
-    // Entorno de producción (CPanel)
-    // ADVERTENCIA: Cambia estos datos con los que crees en tu CPanel
-    define('DB_SERVER', 'localhost');
-    define('DB_USER', 'usuario_cpanel');
-    define('DB_PASS', 'password_segura');
-    define('DB_NAME', 'base_de_datos_cpanel');
-}
+define('DB_SERVER', 'localhost');
+define('DB_USER', 'federico_admin');
+define('DB_PASS', 'cdT-QUgYLShv_6aa');
+define('DB_NAME', 'federico_tienda');
 
 $conn = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 
 if ($conn->connect_error) {
-    if ($_SERVER['SERVER_NAME'] == 'localhost') {
-        die("<h1>Error de Conexión (Local)</h1><p>Asegúrate de que MySQL esté activo en XAMPP.</p>");
+    if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false || (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false)) {
+        header('Content-Type: application/json');
+        die(json_encode(['success' => false, 'message' => 'Error de conexion a la base de datos de producci贸n']));
     }
-    else {
-        die("<h1>Error de Conexión (Producción)</h1><p>Verifica las credenciales en config/conexion.php</p>");
-    }
+
+    die("<h1>Error de Conexion</h1><p>No se pudo conectar a la base de datos del servidor.</p><p>Verifica que el usuario y la contraseña en config/conexion.php coincidan con los de tu cPanel.</p>");
 }
 
 $conn->set_charset("utf8");
@@ -42,4 +31,3 @@ function formatMoney($amount)
 {
     return "S/ " . number_format($amount, 2);
 }
-?>

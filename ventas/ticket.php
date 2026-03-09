@@ -12,10 +12,10 @@ $venta = $conn->query("SELECT * FROM ventas WHERE id = $id")->fetch_assoc();
 $detalles = $conn->query("SELECT d.*, p.nombre FROM detalle_venta d JOIN productos p ON d.producto_id = p.id WHERE d.venta_id = $id");
 
 $empresa = [
-    "nombre" => "LUIS DC STORE",
+    "nombre" => "TIENDA POS",
     "direccion" => "Av. Principal 123, Centro",
     "telefono" => "555-1234",
-    "email" => "contacto@luisdc.com"
+    "email" => "contacto@tiendapos.com"
 ];
 ?>
 <!DOCTYPE html>
